@@ -78,5 +78,13 @@ GitHub Pages rebuilds automatically — changes go live within a few minutes.
   active competitors, mostly thin ad-stuffed sites with no real product behind them). One flagship
   calculator page rather than several near-duplicate tool pages, to avoid a duplicate-content
   penalty. Every post/tool has exactly one contextual CTA to the Play Store, not a banner.
-  **Phase 2 idea, not built:** university-specific attendance-rule pages (VTU, Anna University,
-  etc.) — real long-tail opportunity but needs actual per-university rule research first.
+  **Phase 2 idea, not built — discussed and explicitly held off (2026-08-08):**
+  university-specific attendance-rule pages (VTU, Anna University, Mumbai University, etc.). Real
+  opportunity — long-tail, university-named searches have far less competition and much higher
+  intent than the general posts here, since someone searching their exact university is very
+  likely to click through. Deliberately not started: each page needs to be *actually correct* for
+  that specific university (real minimum %, real condonation policy, real consequences), not the
+  generic UGC/AICTE baseline the general posts use — that's real per-university research, not
+  something to template out. If picking this up: shortlist universities first (ideally by whatever
+  signal exists on Bunku's actual user base, otherwise by size), research each one's real policy,
+  then draft.

@@ -56,18 +56,18 @@
           <button class="calc-stepper" id="absentPlus" type="button" aria-label="Increase absent">+</button>
         </div>
       </div>
-      <div class="calc-field">
-        <label>Minimum required</label>
+      <div class="calc-field" role="group" aria-labelledby="targetGroupLabel">
+        <span class="field-label" id="targetGroupLabel">Minimum required</span>
         <div class="calc-target-row" id="targetRow">
-          <button class="calc-target-btn" data-target="65" type="button">65%</button>
-          <button class="calc-target-btn active" data-target="75" type="button">75%</button>
-          <button class="calc-target-btn" data-target="80" type="button">80%</button>
-          <button class="calc-target-btn" data-target="85" type="button">85%</button>
+          <button class="calc-target-btn" data-target="65" type="button" aria-pressed="false">65%</button>
+          <button class="calc-target-btn active" data-target="75" type="button" aria-pressed="true">75%</button>
+          <button class="calc-target-btn" data-target="80" type="button" aria-pressed="false">80%</button>
+          <button class="calc-target-btn" data-target="85" type="button" aria-pressed="false">85%</button>
         </div>
       </div>
     </div>
 
-    <div class="calc-result">
+    <div class="calc-result" aria-live="polite">
       <div class="ring-shell">
         <div class="ring-track" id="ringTrack">
           <div class="ring-hole">
@@ -76,7 +76,7 @@
           </div>
         </div>
       </div>
-      <div class="calc-msg" id="calcMsg">You can bunk <span id="calcMsgNum">2</span> more classes</div>
+      <div class="calc-msg" id="calcMsg">You can bunk 2 more classes</div>
       <div class="calc-counts tabular" id="calcCounts"><b>9</b> present &middot; <b>1</b> absent &middot; <b>10</b> total</div>
     </div>
   </div>
@@ -172,7 +172,6 @@
   var statusEl = document.getElementById('statusText');
   var ringEl = document.getElementById('ringTrack');
   var msgEl = document.getElementById('calcMsg');
-  var msgNumEl = document.getElementById('calcMsgNum');
   var countsEl = document.getElementById('calcCounts');
 
   function clampInt(v){ v = parseInt(v, 10); return isNaN(v) || v < 0 ? 0 : v; }
@@ -186,18 +185,27 @@
 
   function render(){
     var total = present + absent;
-    var pct = total === 0 ? 100 : (present/total*100);
+
+    if (total === 0) {
+      // Neutral empty ring (0%, muted grey) rather than defaulting to a misleading "100%"
+      // full-green ring while the message says there's nothing entered yet.
+      ringEl.style.setProperty('--pct', '0');
+      ringEl.style.setProperty('--ring-color', 'var(--border-l)');
+      pctEl.textContent = '—';
+      statusEl.textContent = '—';
+      msgEl.innerHTML = 'Enter your attended and missed class counts to get started.';
+      countsEl.innerHTML = '<b>0</b> present &middot; <b>0</b> absent &middot; <b>0</b> total';
+      return;
+    }
+
+    var pct = present/total*100;
     var pctRound = Math.round(pct);
     var color = colorFor(pct);
     ringEl.style.setProperty('--pct', String(pctRound));
     ringEl.style.setProperty('--ring-color', color);
     pctEl.textContent = pctRound + '%';
-    msgEl.style.color = '';
 
-    if (total === 0) {
-      statusEl.textContent = '—';
-      msgEl.innerHTML = 'Enter your attended and missed class counts to get started.';
-    } else if (pct/100 >= target){
+    if (pct/100 >= target){
       var skippable = Math.max(0, Math.floor(present/target - total + EPS));
       statusEl.textContent = skippable > 0 ? 'SAFE' : 'RIGHT AT LINE';
       msgEl.innerHTML = skippable > 0
@@ -220,8 +228,12 @@
 
   document.querySelectorAll('.calc-target-btn').forEach(function(btn){
     btn.addEventListener('click', function(){
-      document.querySelectorAll('.calc-target-btn').forEach(function(b){ b.classList.remove('active'); });
+      document.querySelectorAll('.calc-target-btn').forEach(function(b){
+        b.classList.remove('active');
+        b.setAttribute('aria-pressed', 'false');
+      });
       btn.classList.add('active');
+      btn.setAttribute('aria-pressed', 'true');
       target = parseInt(btn.dataset.target, 10) / 100;
       render();
     });

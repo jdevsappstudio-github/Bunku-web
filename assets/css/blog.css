@@ -22,7 +22,9 @@
 
 /* ============ TOC / share (article footer) ============ */
 .article-footer{ max-width:720px; margin:3rem auto 0; padding:1.75rem; }
-.related{ max-width:720px; margin:3rem auto 5rem; padding:0 1.75rem; }
+/* Always used nested inside .prose, which already applies max-width + padding - don't redeclare
+   either here, or the block gets double-inset relative to the rest of the article. */
+.related{ margin:3rem 0 2rem; }
 .related h2{ font-family:var(--display); font-size:1.1rem; font-weight:800; color:var(--text1); margin-bottom:1rem; }
 .related-list{ display:flex; flex-direction:column; gap:.6rem; }
 .related-list a{ color:var(--primary-l); text-decoration:none; font-size:.95rem; font-weight:600; }

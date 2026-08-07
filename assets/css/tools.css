@@ -8,7 +8,7 @@
   padding:2rem 2rem 2.25rem;
 }
 .calc-field{ margin-bottom:1.25rem; }
-.calc-field label{ display:block; font-size:.8rem; font-weight:700; color:var(--text3); letter-spacing:.02em; margin-bottom:.5rem; text-transform:uppercase; }
+.calc-field label, .calc-field .field-label{ display:block; font-size:.8rem; font-weight:700; color:var(--text3); letter-spacing:.02em; margin-bottom:.5rem; text-transform:uppercase; }
 .calc-input-row{ display:flex; align-items:center; gap:.6rem; }
 .calc-input-row input[type="number"]{
   flex:1; background:var(--surface-el); border:1px solid var(--border-l); color:var(--text1);

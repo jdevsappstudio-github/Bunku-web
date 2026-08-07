@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<url>
+  <loc>https://bunku.jdevsappstudio.com/</loc>
+  <priority>1.00</priority>
+</url>
+<url>
+  <loc>https://bunku.jdevsappstudio.com/tools/attendance-calculator/</loc>
+  <priority>0.90</priority>
+</url>
+<url>
+  <loc>https://bunku.jdevsappstudio.com/blog/</loc>
+  <priority>0.70</priority>
+</url>
+<url>
+  <loc>https://bunku.jdevsappstudio.com/blog/how-to-calculate-attendance-percentage/</loc>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://bunku.jdevsappstudio.com/blog/75-percent-attendance-rule-explained/</loc>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://bunku.jdevsappstudio.com/blog/how-many-classes-can-you-skip/</loc>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://bunku.jdevsappstudio.com/blog/best-ways-to-track-attendance-2026/</loc>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://bunku.jdevsappstudio.com/privacy-policy.html</loc>
+  <priority>0.40</priority>
+</url>
+</urlset>

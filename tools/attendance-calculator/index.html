@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Attendance Calculator — How Many Classes Can You Bunk? | Bunku</title>
+<meta name="description" content="Free attendance percentage calculator for college students. Enter your present/absent count and minimum required attendance (65%, 75%, 80%, 85%) to see exactly how many classes you can safely skip, or how many you need to attend to get back on track." />
+<link rel="canonical" href="https://bunku.jdevsappstudio.com/tools/attendance-calculator/" />
+<meta property="og:title" content="Attendance Calculator — How Many Classes Can You Bunk? | Bunku" />
+<meta property="og:description" content="Free attendance percentage calculator for college students. Enter your present/absent count and minimum required attendance (65%, 75%, 80%, 85%) to see exactly how many classes you can safely skip, or how many you need to attend to get back on track." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://bunku.jdevsappstudio.com/tools/attendance-calculator/" />
+<meta name="twitter:card" content="summary" />
+<meta name="theme-color" content="#09090f" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%236c63ff'/%3E%3Cstop offset='1' stop-color='%23a855f7'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='9' fill='url(%23g)'/%3E%3Ctext x='16' y='22' font-family='Arial,sans-serif' font-size='15' font-weight='800' fill='%23fff' text-anchor='middle'%3EB%3C/text%3E%3C/svg%3E" />
+<link rel="stylesheet" href="/assets/css/main.css" />
+<link rel="stylesheet" href="/assets/css/tools.css" />
+
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is the formula for attendance percentage?","acceptedAnswer":{"@type":"Answer","text":"Attendance % = (Classes Attended ÷ Total Classes Held) × 100. If you've attended 30 out of 40 classes held so far, that's (30 ÷ 40) × 100 = 75%."}},{"@type":"Question","name":"How many classes can I miss and still have 75% attendance?","acceptedAnswer":{"@type":"Answer","text":"It depends on how many classes have already been held and how many you've already attended — that's exactly what the calculator above works out. As a rule of thumb, once you're above 75%, you can keep missing classes as long as your attended-count stays above 75% of the new total after each miss."}},{"@type":"Question","name":"What happens if my attendance falls below 75%?","acceptedAnswer":{"@type":"Answer","text":"Most Indian universities (under UGC/AICTE guidelines) debar students below 75% attendance from sitting the semester-end exam in that subject. Some colleges issue a short-attendance notice or fine first — check your own institution's specific policy, since enforcement varies."}},{"@type":"Question","name":"Is there a condonation rule for being slightly below 75%?","acceptedAnswer":{"@type":"Answer","text":"Many universities allow a condonation of up to 10% (i.e. down to 65%) with a valid reason — usually medical leave or documented emergencies, submitted through your department. This isn't automatic and isn't universal, so confirm with your own college."}},{"@type":"Question","name":"Does attendance percentage reset every semester?","acceptedAnswer":{"@type":"Answer","text":"Yes — attendance is almost always calculated per semester (and often per subject individually, not as one combined average), not cumulative across your whole degree. A rough patch one semester doesn't carry over to the next."}},{"@type":"Question","name":"Can I use this calculator for 65% or 80% attendance rules too?","acceptedAnswer":{"@type":"Answer","text":"Yes — use the target buttons above to switch between 65%, 75%, 80%, and 85%, or type in whatever minimum your college actually requires."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Bunku Attendance Calculator","applicationCategory":"EducationApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"INR"},"url":"https://bunku.jdevsappstudio.com/tools/attendance-calculator/"}</script>
+</head>
+<body>
+
+<nav>
+  <a class="logo" href="/"><span class="mark">B</span><span class="word">Bun<span class="accent">ku</span></span></a>
+  <div class="nav-right">
+    <a class="nav-link" href="/blog/">Blog</a>
+    <a class="nav-link" href="/tools/attendance-calculator/">Attendance Calculator</a>
+    <a class="nav-cta" href="https://play.google.com/store/apps/details?id=com.jdevsappstudio.bunku" target="_blank" rel="noopener">Get the app</a>
+  </div>
+</nav>
+
+<section class="page-hero">
+  <div class="page-hero-scrim"></div>
+  <span class="eyebrow"><span class="dot"></span> Free tool &middot; no sign-up</span>
+  <h1>Attendance Calculator — How Many Classes Can You Bunk?</h1>
+  <p class="sub">Enter your present/absent count and your college's minimum — get your safe-bunk count, or exactly how many classes you need to attend to get back above it.</p>
+</section>
+
+<section class="calc-shell">
+  <div class="calc-grid">
+    <div class="calc-card">
+      <div class="calc-field">
+        <label for="presentInput">Classes attended</label>
+        <div class="calc-input-row">
+          <button class="calc-stepper" id="presentMinus" type="button" aria-label="Decrease present">&minus;</button>
+          <input type="number" id="presentInput" class="tabular" min="0" value="9" inputmode="numeric" />
+          <button class="calc-stepper" id="presentPlus" type="button" aria-label="Increase present">+</button>
+        </div>
+      </div>
+      <div class="calc-field">
+        <label for="absentInput">Classes missed</label>
+        <div class="calc-input-row">
+          <button class="calc-stepper" id="absentMinus" type="button" aria-label="Decrease absent">&minus;</button>
+          <input type="number" id="absentInput" class="tabular" min="0" value="1" inputmode="numeric" />
+          <button class="calc-stepper" id="absentPlus" type="button" aria-label="Increase absent">+</button>
+        </div>
+      </div>
+      <div class="calc-field" role="group" aria-labelledby="targetGroupLabel">
+        <span class="field-label" id="targetGroupLabel">Minimum required</span>
+        <div class="calc-target-row" id="targetRow">
+          <button class="calc-target-btn" data-target="65" type="button" aria-pressed="false">65%</button>
+          <button class="calc-target-btn active" data-target="75" type="button" aria-pressed="true">75%</button>
+          <button class="calc-target-btn" data-target="80" type="button" aria-pressed="false">80%</button>
+          <button class="calc-target-btn" data-target="85" type="button" aria-pressed="false">85%</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="calc-result" aria-live="polite">
+      <div class="ring-shell">
+        <div class="ring-track" id="ringTrack">
+          <div class="ring-hole">
+            <span class="pct tabular" id="pctText">90%</span>
+            <span class="status" id="statusText">SAFE</span>
+          </div>
+        </div>
+      </div>
+      <div class="calc-msg" id="calcMsg">You can bunk 2 more classes</div>
+      <div class="calc-counts tabular" id="calcCounts"><b>9</b> present &middot; <b>1</b> absent &middot; <b>10</b> total</div>
+    </div>
+  </div>
+
+  <div class="cta-callout">
+    <p>Doing this math by hand every week gets old fast. <strong>Bunku</strong> tracks it automatically — mark present/absent in one tap, per subject.</p>
+    <a class="btn-outline" href="https://play.google.com/store/apps/details?id=com.jdevsappstudio.bunku" target="_blank" rel="noopener">Get Bunku free &rarr;</a>
+  </div>
+</section>
+
+<article class="prose">
+  <h2>How this calculator works</h2>
+  <p>Attendance percentage is just the share of held classes you actually showed up to:</p>
+  <div class="formula">Attendance % = (Classes Attended &divide; Total Classes Held) &times; 100</div>
+  <p>Once you're above your college's minimum, the calculator works out the most classes you can miss going forward while your attended-count stays at or above that minimum against the growing total. If you're below it, it works out the fewest classes you'd need to attend in a row to climb back above it — there's no way to "skip forward" past a shortage, you can only attend your way out of one.</p>
+
+  <h2>Typical attendance minimums in Indian colleges</h2>
+  <table>
+    <tr><th>Minimum</th><th>Where it's common</th></tr>
+    <tr><td>65%</td><td>With documented condonation applied (medical leave, etc.) on top of a 75% base rule</td></tr>
+    <tr><td>75%</td><td>The most common baseline under UGC/AICTE guidance for engineering and most degree colleges</td></tr>
+    <tr><td>80%</td><td>Some private universities and professional programs</td></tr>
+    <tr><td>85%</td><td>Certain medical/paramedical and diploma programs</td></tr>
+  </table>
+  <p>Always confirm the exact number with your own department — this varies by university and sometimes by subject (theory vs. practical are often tracked separately).</p>
+
+  <h2>Frequently asked questions</h2>
+  <div class="faq">
+    <div class="faq-item">
+      <h3>What is the formula for attendance percentage?</h3>
+      <p>Attendance % = (Classes Attended ÷ Total Classes Held) × 100. If you've attended 30 out of 40 classes held so far, that's (30 ÷ 40) × 100 = 75%.</p>
+    </div>
+    <div class="faq-item">
+      <h3>How many classes can I miss and still have 75% attendance?</h3>
+      <p>It depends on how many classes have already been held and how many you've already attended — that's exactly what the calculator above works out. As a rule of thumb, once you're above 75%, you can keep missing classes as long as your attended-count stays above 75% of the new total after each miss.</p>
+    </div>
+    <div class="faq-item">
+      <h3>What happens if my attendance falls below 75%?</h3>
+      <p>Most Indian universities (under UGC/AICTE guidelines) debar students below 75% attendance from sitting the semester-end exam in that subject. Some colleges issue a short-attendance notice or fine first — check your own institution's specific policy, since enforcement varies.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Is there a condonation rule for being slightly below 75%?</h3>
+      <p>Many universities allow a condonation of up to 10% (i.e. down to 65%) with a valid reason — usually medical leave or documented emergencies, submitted through your department. This isn't automatic and isn't universal, so confirm with your own college.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Does attendance percentage reset every semester?</h3>
+      <p>Yes — attendance is almost always calculated per semester (and often per subject individually, not as one combined average), not cumulative across your whole degree. A rough patch one semester doesn't carry over to the next.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Can I use this calculator for 65% or 80% attendance rules too?</h3>
+      <p>Yes — use the target buttons above to switch between 65%, 75%, 80%, and 85%, or type in whatever minimum your college actually requires.</p>
+    </div>
+  </div>
+
+  <div class="related">
+    <h2>Related reading</h2>
+    <div class="related-list">
+      <a href="/blog/how-to-calculate-attendance-percentage/">How to Calculate Attendance Percentage (With Formula &amp; Examples)</a>
+      <a href="/blog/75-percent-attendance-rule-explained/">75% Attendance Rule Explained: UGC/AICTE Rules &amp; Condonation</a>
+      <a href="/blog/how-many-classes-can-you-skip/">How Many Classes Can You Skip and Still Stay Above 75%?</a>
+    </div>
+  </div>
+</article>
+
+
+<footer>
+  <div class="footer-inner">
+    <a class="logo" href="/"><span class="mark">B</span><span class="word">Bun<span class="accent">ku</span></span></a>
+    <div class="footer-links">
+      <a href="/blog/">Blog</a>
+      <a href="/tools/attendance-calculator/">Attendance Calculator</a>
+      <a href="/privacy-policy.html">Privacy Policy</a>
+      <a href="mailto:jdevsappstudio@gmail.com">Contact</a>
+    </div>
+    <div class="footer-meta">
+      <span>&copy; 2026 JDevsAppStudio &middot; Bunku for Android</span>
+      <span>Also building <a href="https://animepedia.jdevsappstudio.com" target="_blank" rel="noopener">AnimePedia</a> — anime quotes &amp; ringtones</span>
+    </div>
+  </div>
+</footer>
+<script>
+
+(function(){
+  var present = 9, absent = 1, target = 0.75;
+  // Binary floating point can't represent 0.65/0.8/0.85 exactly (e.g. 1 - 0.8 !== 0.2), which
+  // can push an exact integer boundary a hair over/under and round Math.ceil/floor to the wrong
+  // integer. Verified against calc-logic.test.js (property-based, 5000+ random cases) — keep
+  // this file's math in sync with calc-logic.js if either changes.
+  var EPS = 1e-9;
+  var presentInput = document.getElementById('presentInput');
+  var absentInput = document.getElementById('absentInput');
+  var pctEl = document.getElementById('pctText');
+  var statusEl = document.getElementById('statusText');
+  var ringEl = document.getElementById('ringTrack');
+  var msgEl = document.getElementById('calcMsg');
+  var countsEl = document.getElementById('calcCounts');
+
+  function clampInt(v){ v = parseInt(v, 10); return isNaN(v) || v < 0 ? 0 : v; }
+
+  function colorFor(pct){
+    var s = getComputedStyle(document.documentElement);
+    if (pct >= target*100) return s.getPropertyValue('--success').trim();
+    if (pct >= target*100 - 15) return s.getPropertyValue('--amber').trim();
+    return s.getPropertyValue('--danger').trim();
+  }
+
+  function render(){
+    var total = present + absent;
+
+    if (total === 0) {
+      // Neutral empty ring (0%, muted grey) rather than defaulting to a misleading "100%"
+      // full-green ring while the message says there's nothing entered yet.
+      ringEl.style.setProperty('--pct', '0');
+      ringEl.style.setProperty('--ring-color', 'var(--border-l)');
+      pctEl.textContent = '—';
+      statusEl.textContent = '—';
+      msgEl.innerHTML = 'Enter your attended and missed class counts to get started.';
+      countsEl.innerHTML = '<b>0</b> present &middot; <b>0</b> absent &middot; <b>0</b> total';
+      return;
+    }
+
+    var pct = present/total*100;
+    var pctRound = Math.round(pct);
+    var color = colorFor(pct);
+    ringEl.style.setProperty('--pct', String(pctRound));
+    ringEl.style.setProperty('--ring-color', color);
+    pctEl.textContent = pctRound + '%';
+
+    if (pct/100 >= target){
+      var skippable = Math.max(0, Math.floor(present/target - total + EPS));
+      statusEl.textContent = skippable > 0 ? 'SAFE' : 'RIGHT AT LINE';
+      msgEl.innerHTML = skippable > 0
+        ? 'You can bunk <span class="tabular" style="color:' + color + '">' + skippable + '</span> more class' + (skippable === 1 ? '' : 'es')
+        : '<span style="color:' + color + '">One more miss</span> drops you below ' + Math.round(target*100) + '%';
+    } else {
+      var need = Math.max(1, Math.ceil((target*total - present)/(1-target) - EPS));
+      statusEl.textContent = pct/100 >= target - .15 ? 'WARNING' : 'AT RISK';
+      msgEl.innerHTML = 'Attend <span class="tabular" style="color:' + color + '">' + need + '</span> more in a row to reach ' + Math.round(target*100) + '%';
+    }
+    countsEl.innerHTML = '<b>' + present + '</b> present &middot; <b>' + absent + '</b> absent &middot; <b>' + total + '</b> total';
+  }
+
+  presentInput.addEventListener('input', function(){ present = clampInt(this.value); render(); });
+  absentInput.addEventListener('input', function(){ absent = clampInt(this.value); render(); });
+  document.getElementById('presentMinus').addEventListener('click', function(){ present = Math.max(0, present-1); presentInput.value = present; render(); });
+  document.getElementById('presentPlus').addEventListener('click', function(){ present++; presentInput.value = present; render(); });
+  document.getElementById('absentMinus').addEventListener('click', function(){ absent = Math.max(0, absent-1); absentInput.value = absent; render(); });
+  document.getElementById('absentPlus').addEventListener('click', function(){ absent++; absentInput.value = absent; render(); });
+
+  document.querySelectorAll('.calc-target-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      document.querySelectorAll('.calc-target-btn').forEach(function(b){
+        b.classList.remove('active');
+        b.setAttribute('aria-pressed', 'false');
+      });
+      btn.classList.add('active');
+      btn.setAttribute('aria-pressed', 'true');
+      target = parseInt(btn.dataset.target, 10) / 100;
+      render();
+    });
+  });
+
+  render();
+})();
+
+</script>
+</body>
+</html>
